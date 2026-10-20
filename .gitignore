@@ -1,3 +1,6 @@
+# GitHub configuration and workflows.
+/.github/
+
 # Local secrets: keep only the blank, shared environment template.
 .env
 .env.*
@@ -127,3 +130,4 @@ Thumbs.db
 Thumbs.db:encryptable
 Desktop.ini
 $RECYCLE.BIN/
+

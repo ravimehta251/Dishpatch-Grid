@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: dispatchgrid-api
+  config:
+    import: classpath:application-common.yml
+  kafka:
+    listener:
+      auto-startup: false
+server:
+  port: 8080
+  shutdown: graceful
+  tomcat:
+    max-http-form-post-size: 1MB
+    max-swallow-size: 1MB
+  error:
+    include-message: never
+dispatchgrid:
+  jwt-secret: ${JWT_SECRET}
+  cookie-secure: ${COOKIE_SECURE:true}
+  monitoring-token: ${MONITORING_TOKEN}
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html

@@ -1,0 +1,588 @@
+{
+  "run": "20261018T065753Z-slow",
+  "profile": "sustained",
+  "rate": 5,
+  "workers": 1,
+  "concurrencyPerWorker": 8,
+  "fanout": 1,
+  "receiverDelayMs": 500,
+  "configuredFailures": 0,
+  "events": 100,
+  "expectedDeliveries": 100,
+  "delivery": {
+    "deliveries": 100,
+    "delivered": 100,
+    "terminal": 0,
+    "pending": 0,
+    "deliveryP50Ms": 16061.1005,
+    "deliveryP95Ms": 29955.61575,
+    "deliveryP99Ms": 31192.09368,
+    "attempts": 100
+  },
+  "resources": [
+    {
+      "time": 1792306765.895772,
+      "containers": [
+        {
+          "BlockIO": "4.1kB / 8.19kB",
+          "CPUPerc": "0.00%",
+          "Container": "9b942a4764671d5bde498f1ebe4cfae4f56e6316e3eee73e3106b738d5a75b45",
+          "ID": "9b942a476467",
+          "MemPerc": "0.16%",
+          "MemUsage": "12.82MiB / 7.621GiB",
+          "Name": "dispatchgrid-dashboard-1",
+          "NetIO": "103kB / 834kB",
+          "PIDs": "17"
+        },
+        {
+          "BlockIO": "0B / 406kB",
+          "CPUPerc": "3.33%",
+          "Container": "352650a2320bded63203f8f5273e1cd92ac4ac8e294a0a2201d05488576e2d89",
+          "ID": "352650a2320b",
+          "MemPerc": "51.40%",
+          "MemUsage": "394.8MiB / 768MiB",
+          "Name": "dispatchgrid-worker-1",
+          "NetIO": "5.29MB / 14.3MB",
+          "PIDs": "80"
+        },
+        {
+          "BlockIO": "111kB / 10.7MB",
+          "CPUPerc": "0.31%",
+          "Container": "47724c9bb28e8f5153df079bdd7d1a69ab47c71ee761dfaa7a4c938ee9cc7e1c",
+          "ID": "47724c9bb28e",
+          "MemPerc": "0.30%",
+          "MemUsage": "23.2MiB / 7.621GiB",
+          "Name": "dispatchgrid-receiver-1",
+          "NetIO": "1.09MB / 535kB",
+          "PIDs": "2"
+        },
+        {
+          "BlockIO": "0B / 287kB",
+          "CPUPerc": "2.01%",
+          "Container": "894389d32ba7cc87ac1b9ac01fe7d9f8822ad2b9a3dd7e2401cacdaa6936c29b",
+          "ID": "894389d32ba7",
+          "MemPerc": "50.22%",
+          "MemUsage": "385.7MiB / 768MiB",
+          "Name": "dispatchgrid-api-1",
+          "NetIO": "1.54MB / 7.21MB",
+          "PIDs": "38"
+        },
+        {
+          "BlockIO": "346MB / 459kB",
+          "CPUPerc": "0.19%",
+          "Container": "d91ba92e4c7c974fb5a294c1e1df7756821392e883909cd4550ab29dacb71fd9",
+          "ID": "d91ba92e4c7c",
+          "MemPerc": "1.12%",
+          "MemUsage": "87.03MiB / 7.621GiB",
+          "Name": "dispatchgrid-grafana-1",
+          "NetIO": "168kB / 11.5MB",
+          "PIDs": "21"
+        },
+        {
+          "BlockIO": "128MB / 8.57MB",
+          "CPUPerc": "0.00%",
+          "Container": "118f607b4c94f4190424b49dc11e2dcab569d564f8de9632a2ca9fdfa3e30d6a",
+          "ID": "118f607b4c94",
+          "MemPerc": "0.80%",
+          "MemUsage": "62.06MiB / 7.621GiB",
+          "Name": "dispatchgrid-prometheus-1",
+          "NetIO": "15.3MB / 126kB",
+          "PIDs": "19"
+        },
+        {
+          "BlockIO": "45.9MB / 71.7MB",
+          "CPUPerc": "2.22%",
+          "Container": "1cca8f2946550bd5290a3ceddcb9f272cdba538e4e78c9927404a01397e5e3d3",
+          "ID": "1cca8f294655",
+          "MemPerc": "1.47%",
+          "MemUsage": "114.6MiB / 7.621GiB",
+          "Name": "dispatchgrid-postgres-1",
+          "NetIO": "5.55MB / 4.53MB",
+          "PIDs": "38"
+        },
+        {
+          "BlockIO": "31.4MB / 340kB",
+          "CPUPerc": "0.48%",
+          "Container": "847f915f59c7222605dfbdff94ab16dba731b1e9571b7bf6d8b46bf4d50db1fc",
+          "ID": "847f915f59c7",
+          "MemPerc": "0.17%",
+          "MemUsage": "12.99MiB / 7.621GiB",
+          "Name": "dispatchgrid-redis-1",
+          "NetIO": "187kB / 86.1kB",
+          "PIDs": "6"
+        },
+        {
+          "BlockIO": "138MB / 6.36MB",
+          "CPUPerc": "4.07%",
+          "Container": "b0d75295154baaba8f4c7dd7716891fb84d30573ffebb300d25f254b5582f4dc",
+          "ID": "b0d75295154b",
+          "MemPerc": "8.68%",
+          "MemUsage": "677.7MiB / 7.621GiB",
+          "Name": "dispatchgrid-kafka-1",
+          "NetIO": "2.09MB / 1.71MB",
+          "PIDs": "116"
+        },
+        {
+          "BlockIO": "0B / 0B",
+          "CPUPerc": "1.40%",
+          "Container": "5c9f57099d8a4263a91910e3365867b06392041341902acfcbd7755e8b54e412",
+          "ID": "5c9f57099d8a",
+          "MemPerc": "0.18%",
+          "MemUsage": "14.22MiB / 7.621GiB",
+          "Name": "focused_kirch",
+          "NetIO": "8.16kB / 7.4kB",
+          "PIDs": "16"
+        }
+      ]
+    },
+    {
+      "time": 1792306771.0469635,
+      "containers": [
+        {
+          "BlockIO": "0B / 0B",
+          "CPUPerc": "1.30%",
+          "Container": "5c9f57099d8a4263a91910e3365867b06392041341902acfcbd7755e8b54e412",
+          "ID": "5c9f57099d8a",
+          "MemPerc": "0.20%",
+          "MemUsage": "15.95MiB / 7.621GiB",
+          "Name": "focused_kirch",
+          "NetIO": "23.6kB / 22.2kB",
+          "PIDs": "19"
+        },
+        {
+          "BlockIO": "4.1kB / 8.19kB",
+          "CPUPerc": "0.00%",
+          "Container": "9b942a4764671d5bde498f1ebe4cfae4f56e6316e3eee73e3106b738d5a75b45",
+          "ID": "9b942a476467",
+          "MemPerc": "0.16%",
+          "MemUsage": "12.82MiB / 7.621GiB",
+          "Name": "dispatchgrid-dashboard-1",
+          "NetIO": "103kB / 834kB",
+          "PIDs": "17"
+        },
+        {
+          "BlockIO": "0B / 406kB",
+          "CPUPerc": "5.88%",
+          "Container": "352650a2320bded63203f8f5273e1cd92ac4ac8e294a0a2201d05488576e2d89",
+          "ID": "352650a2320b",
+          "MemPerc": "51.51%",
+          "MemUsage": "395.6MiB / 768MiB",
+          "Name": "dispatchgrid-worker-1",
+          "NetIO": "5.41MB / 14.9MB",
+          "PIDs": "80"
+        },
+        {
+          "BlockIO": "111kB / 10.9MB",
+          "CPUPerc": "0.33%",
+          "Container": "47724c9bb28e8f5153df079bdd7d1a69ab47c71ee761dfaa7a4c938ee9cc7e1c",
+          "ID": "47724c9bb28e",
+          "MemPerc": "0.32%",
+          "MemUsage": "24.89MiB / 7.621GiB",
+          "Name": "dispatchgrid-receiver-1",
+          "NetIO": "1.1MB / 541kB",
+          "PIDs": "2"
+        },
+        {
+          "BlockIO": "0B / 287kB",
+          "CPUPerc": "2.25%",
+          "Container": "894389d32ba7cc87ac1b9ac01fe7d9f8822ad2b9a3dd7e2401cacdaa6936c29b",
+          "ID": "894389d32ba7",
+          "MemPerc": "50.18%",
+          "MemUsage": "385.4MiB / 768MiB",
+          "Name": "dispatchgrid-api-1",
+          "NetIO": "1.61MB / 7.73MB",
+          "PIDs": "38"
+        },
+        {
+          "BlockIO": "346MB / 459kB",
+          "CPUPerc": "1.21%",
+          "Container": "d91ba92e4c7c974fb5a294c1e1df7756821392e883909cd4550ab29dacb71fd9",
+          "ID": "d91ba92e4c7c",
+          "MemPerc": "1.12%",
+          "MemUsage": "87.78MiB / 7.621GiB",
+          "Name": "dispatchgrid-grafana-1",
+          "NetIO": "168kB / 11.5MB",
+          "PIDs": "21"
+        },
+        {
+          "BlockIO": "128MB / 8.57MB",
+          "CPUPerc": "0.00%",
+          "Container": "118f607b4c94f4190424b49dc11e2dcab569d564f8de9632a2ca9fdfa3e30d6a",
+          "ID": "118f607b4c94",
+          "MemPerc": "0.80%",
+          "MemUsage": "62.07MiB / 7.621GiB",
+          "Name": "dispatchgrid-prometheus-1",
+          "NetIO": "15.7MB / 129kB",
+          "PIDs": "19"
+        },
+        {
+          "BlockIO": "45.9MB / 73.2MB",
+          "CPUPerc": "2.38%",
+          "Container": "1cca8f2946550bd5290a3ceddcb9f272cdba538e4e78c9927404a01397e5e3d3",
+          "ID": "1cca8f294655",
+          "MemPerc": "1.47%",
+          "MemUsage": "114.4MiB / 7.621GiB",
+          "Name": "dispatchgrid-postgres-1",
+          "NetIO": "5.68MB / 4.63MB",
+          "PIDs": "38"
+        },
+        {
+          "BlockIO": "31.4MB / 373kB",
+          "CPUPerc": "0.48%",
+          "Container": "847f915f59c7222605dfbdff94ab16dba731b1e9571b7bf6d8b46bf4d50db1fc",
+          "ID": "847f915f59c7",
+          "MemPerc": "0.16%",
+          "MemUsage": "12.52MiB / 7.621GiB",
+          "Name": "dispatchgrid-redis-1",
+          "NetIO": "196kB / 89.6kB",
+          "PIDs": "6"
+        },
+        {
+          "BlockIO": "138MB / 6.44MB",
+          "CPUPerc": "3.01%",
+          "Container": "b0d75295154baaba8f4c7dd7716891fb84d30573ffebb300d25f254b5582f4dc",
+          "ID": "b0d75295154b",
+          "MemPerc": "8.72%",
+          "MemUsage": "680.7MiB / 7.621GiB",
+          "Name": "dispatchgrid-kafka-1",
+          "NetIO": "2.15MB / 1.75MB",
+          "PIDs": "116"
+        }
+      ]
+    },
+    {
+      "time": 1792306776.1858215,
+      "containers": [
+        {
+          "BlockIO": "0B / 0B",
+          "CPUPerc": "1.15%",
+          "Container": "5c9f57099d8a4263a91910e3365867b06392041341902acfcbd7755e8b54e412",
+          "ID": "5c9f57099d8a",
+          "MemPerc": "0.21%",
+          "MemUsage": "16.57MiB / 7.621GiB",
+          "Name": "focused_kirch",
+          "NetIO": "39.4kB / 37.5kB",
+          "PIDs": "19"
+        },
+        {
+          "BlockIO": "4.1kB / 8.19kB",
+          "CPUPerc": "0.00%",
+          "Container": "9b942a4764671d5bde498f1ebe4cfae4f56e6316e3eee73e3106b738d5a75b45",
+          "ID": "9b942a476467",
+          "MemPerc": "0.16%",
+          "MemUsage": "12.82MiB / 7.621GiB",
+          "Name": "dispatchgrid-dashboard-1",
+          "NetIO": "103kB / 834kB",
+          "PIDs": "17"
+        },
+        {
+          "BlockIO": "0B / 406kB",
+          "CPUPerc": "11.19%",
+          "Container": "352650a2320bded63203f8f5273e1cd92ac4ac8e294a0a2201d05488576e2d89",
+          "ID": "352650a2320b",
+          "MemPerc": "51.47%",
+          "MemUsage": "395.3MiB / 768MiB",
+          "Name": "dispatchgrid-worker-1",
+          "NetIO": "5.52MB / 15.1MB",
+          "PIDs": "80"
+        },
+        {
+          "BlockIO": "111kB / 11MB",
+          "CPUPerc": "0.35%",
+          "Container": "47724c9bb28e8f5153df079bdd7d1a69ab47c71ee761dfaa7a4c938ee9cc7e1c",
+          "ID": "47724c9bb28e",
+          "MemPerc": "0.34%",
+          "MemUsage": "26.75MiB / 7.621GiB",
+          "Name": "dispatchgrid-receiver-1",
+          "NetIO": "1.11MB / 547kB",
+          "PIDs": "2"
+        },
+        {
+          "BlockIO": "0B / 287kB",
+          "CPUPerc": "1.77%",
+          "Container": "894389d32ba7cc87ac1b9ac01fe7d9f8822ad2b9a3dd7e2401cacdaa6936c29b",
+          "ID": "894389d32ba7",
+          "MemPerc": "50.24%",
+          "MemUsage": "385.9MiB / 768MiB",
+          "Name": "dispatchgrid-api-1",
+          "NetIO": "1.66MB / 8.24MB",
+          "PIDs": "38"
+        },
+        {
+          "BlockIO": "346MB / 459kB",
+          "CPUPerc": "0.20%",
+          "Container": "d91ba92e4c7c974fb5a294c1e1df7756821392e883909cd4550ab29dacb71fd9",
+          "ID": "d91ba92e4c7c",
+          "MemPerc": "1.12%",
+          "MemUsage": "87.27MiB / 7.621GiB",
+          "Name": "dispatchgrid-grafana-1",
+          "NetIO": "168kB / 11.5MB",
+          "PIDs": "21"
+        },
+        {
+          "BlockIO": "128MB / 8.57MB",
+          "CPUPerc": "0.26%",
+          "Container": "118f607b4c94f4190424b49dc11e2dcab569d564f8de9632a2ca9fdfa3e30d6a",
+          "ID": "118f607b4c94",
+          "MemPerc": "0.80%",
+          "MemUsage": "62.8MiB / 7.621GiB",
+          "Name": "dispatchgrid-prometheus-1",
+          "NetIO": "16.6MB / 135kB",
+          "PIDs": "19"
+        },
+        {
+          "BlockIO": "45.9MB / 76.7MB",
+          "CPUPerc": "2.10%",
+          "Container": "1cca8f2946550bd5290a3ceddcb9f272cdba538e4e78c9927404a01397e5e3d3",
+          "ID": "1cca8f294655",
+          "MemPerc": "1.47%",
+          "MemUsage": "114.8MiB / 7.621GiB",
+          "Name": "dispatchgrid-postgres-1",
+          "NetIO": "5.81MB / 4.74MB",
+          "PIDs": "38"
+        },
+        {
+          "BlockIO": "31.4MB / 397kB",
+          "CPUPerc": "0.57%",
+          "Container": "847f915f59c7222605dfbdff94ab16dba731b1e9571b7bf6d8b46bf4d50db1fc",
+          "ID": "847f915f59c7",
+          "MemPerc": "0.16%",
+          "MemUsage": "12.21MiB / 7.621GiB",
+          "Name": "dispatchgrid-redis-1",
+          "NetIO": "203kB / 91.4kB",
+          "PIDs": "6"
+        },
+        {
+          "BlockIO": "138MB / 6.5MB",
+          "CPUPerc": "3.05%",
+          "Container": "b0d75295154baaba8f4c7dd7716891fb84d30573ffebb300d25f254b5582f4dc",
+          "ID": "b0d75295154b",
+          "MemPerc": "8.79%",
+          "MemUsage": "685.7MiB / 7.621GiB",
+          "Name": "dispatchgrid-kafka-1",
+          "NetIO": "2.21MB / 1.79MB",
+          "PIDs": "116"
+        }
+      ]
+    },
+    {
+      "time": 1792306781.3579402,
+      "containers": [
+        {
+          "BlockIO": "0B / 0B",
+          "CPUPerc": "1.34%",
+          "Container": "5c9f57099d8a4263a91910e3365867b06392041341902acfcbd7755e8b54e412",
+          "ID": "5c9f57099d8a",
+          "MemPerc": "0.21%",
+          "MemUsage": "16.32MiB / 7.621GiB",
+          "Name": "focused_kirch",
+          "NetIO": "55.2kB / 52.9kB",
+          "PIDs": "20"
+        },
+        {
+          "BlockIO": "4.1kB / 8.19kB",
+          "CPUPerc": "0.00%",
+          "Container": "9b942a4764671d5bde498f1ebe4cfae4f56e6316e3eee73e3106b738d5a75b45",
+          "ID": "9b942a476467",
+          "MemPerc": "0.16%",
+          "MemUsage": "12.82MiB / 7.621GiB",
+          "Name": "dispatchgrid-dashboard-1",
+          "NetIO": "103kB / 834kB",
+          "PIDs": "17"
+        },
+        {
+          "BlockIO": "0B / 406kB",
+          "CPUPerc": "7.37%",
+          "Container": "352650a2320bded63203f8f5273e1cd92ac4ac8e294a0a2201d05488576e2d89",
+          "ID": "352650a2320b",
+          "MemPerc": "51.55%",
+          "MemUsage": "395.9MiB / 768MiB",
+          "Name": "dispatchgrid-worker-1",
+          "NetIO": "5.62MB / 15.2MB",
+          "PIDs": "80"
+        },
+        {
+          "BlockIO": "111kB / 11.2MB",
+          "CPUPerc": "0.34%",
+          "Container": "47724c9bb28e8f5153df079bdd7d1a69ab47c71ee761dfaa7a4c938ee9cc7e1c",
+          "ID": "47724c9bb28e",
+          "MemPerc": "0.37%",
+          "MemUsage": "28.93MiB / 7.621GiB",
+          "Name": "dispatchgrid-receiver-1",
+          "NetIO": "1.12MB / 553kB",
+          "PIDs": "2"
+        },
+        {
+          "BlockIO": "0B / 287kB",
+          "CPUPerc": "18.72%",
+          "Container": "894389d32ba7cc87ac1b9ac01fe7d9f8822ad2b9a3dd7e2401cacdaa6936c29b",
+          "ID": "894389d32ba7",
+          "MemPerc": "50.35%",
+          "MemUsage": "386.7MiB / 768MiB",
+          "Name": "dispatchgrid-api-1",
+          "NetIO": "1.71MB / 8.32MB",
+          "PIDs": "38"
+        },
+        {
+          "BlockIO": "346MB / 459kB",
+          "CPUPerc": "0.20%",
+          "Container": "d91ba92e4c7c974fb5a294c1e1df7756821392e883909cd4550ab29dacb71fd9",
+          "ID": "d91ba92e4c7c",
+          "MemPerc": "1.12%",
+          "MemUsage": "87.04MiB / 7.621GiB",
+          "Name": "dispatchgrid-grafana-1",
+          "NetIO": "168kB / 11.5MB",
+          "PIDs": "21"
+        },
+        {
+          "BlockIO": "128MB / 8.57MB",
+          "CPUPerc": "0.78%",
+          "Container": "118f607b4c94f4190424b49dc11e2dcab569d564f8de9632a2ca9fdfa3e30d6a",
+          "ID": "118f607b4c94",
+          "MemPerc": "0.80%",
+          "MemUsage": "62.71MiB / 7.621GiB",
+          "Name": "dispatchgrid-prometheus-1",
+          "NetIO": "17.1MB / 137kB",
+          "PIDs": "19"
+        },
+        {
+          "BlockIO": "45.9MB / 78.8MB",
+          "CPUPerc": "3.10%",
+          "Container": "1cca8f2946550bd5290a3ceddcb9f272cdba538e4e78c9927404a01397e5e3d3",
+          "ID": "1cca8f294655",
+          "MemPerc": "1.47%",
+          "MemUsage": "114.6MiB / 7.621GiB",
+          "Name": "dispatchgrid-postgres-1",
+          "NetIO": "5.95MB / 4.84MB",
+          "PIDs": "38"
+        },
+        {
+          "BlockIO": "31.4MB / 422kB",
+          "CPUPerc": "0.56%",
+          "Container": "847f915f59c7222605dfbdff94ab16dba731b1e9571b7bf6d8b46bf4d50db1fc",
+          "ID": "847f915f59c7",
+          "MemPerc": "0.16%",
+          "MemUsage": "12.73MiB / 7.621GiB",
+          "Name": "dispatchgrid-redis-1",
+          "NetIO": "211kB / 94.7kB",
+          "PIDs": "6"
+        },
+        {
+          "BlockIO": "138MB / 6.58MB",
+          "CPUPerc": "4.54%",
+          "Container": "b0d75295154baaba8f4c7dd7716891fb84d30573ffebb300d25f254b5582f4dc",
+          "ID": "b0d75295154b",
+          "MemPerc": "8.83%",
+          "MemUsage": "689.5MiB / 7.621GiB",
+          "Name": "dispatchgrid-kafka-1",
+          "NetIO": "2.27MB / 1.84MB",
+          "PIDs": "116"
+        }
+      ]
+    },
+    {
+      "time": 1792306786.545668,
+      "containers": [
+        {
+          "BlockIO": "4.1kB / 8.19kB",
+          "CPUPerc": "1.90%",
+          "Container": "9b942a4764671d5bde498f1ebe4cfae4f56e6316e3eee73e3106b738d5a75b45",
+          "ID": "9b942a476467",
+          "MemPerc": "0.17%",
+          "MemUsage": "13.43MiB / 7.621GiB",
+          "Name": "dispatchgrid-dashboard-1",
+          "NetIO": "103kB / 834kB",
+          "PIDs": "17"
+        },
+        {
+          "BlockIO": "0B / 418kB",
+          "CPUPerc": "2.96%",
+          "Container": "352650a2320bded63203f8f5273e1cd92ac4ac8e294a0a2201d05488576e2d89",
+          "ID": "352650a2320b",
+          "MemPerc": "51.37%",
+          "MemUsage": "394.5MiB / 768MiB",
+          "Name": "dispatchgrid-worker-1",
+          "NetIO": "5.73MB / 15.8MB",
+          "PIDs": "80"
+        },
+        {
+          "BlockIO": "111kB / 11.3MB",
+          "CPUPerc": "0.46%",
+          "Container": "47724c9bb28e8f5153df079bdd7d1a69ab47c71ee761dfaa7a4c938ee9cc7e1c",
+          "ID": "47724c9bb28e",
+          "MemPerc": "0.38%",
+          "MemUsage": "29.88MiB / 7.621GiB",
+          "Name": "dispatchgrid-receiver-1",
+          "NetIO": "1.14MB / 558kB",
+          "PIDs": "2"
+        },
+        {
+          "BlockIO": "0B / 299kB",
+          "CPUPerc": "3.82%",
+          "Container": "894389d32ba7cc87ac1b9ac01fe7d9f8822ad2b9a3dd7e2401cacdaa6936c29b",
+          "ID": "894389d32ba7",
+          "MemPerc": "50.28%",
+          "MemUsage": "386.1MiB / 768MiB",
+          "Name": "dispatchgrid-api-1",
+          "NetIO": "1.74MB / 8.79MB",
+          "PIDs": "38"
+        },
+        {
+          "BlockIO": "346MB / 459kB",
+          "CPUPerc": "0.22%",
+          "Container": "d91ba92e4c7c974fb5a294c1e1df7756821392e883909cd4550ab29dacb71fd9",
+          "ID": "d91ba92e4c7c",
+          "MemPerc": "1.12%",
+          "MemUsage": "87.04MiB / 7.621GiB",
+          "Name": "dispatchgrid-grafana-1",
+          "NetIO": "168kB / 11.5MB",
+          "PIDs": "21"
+        },
+        {
+          "BlockIO": "128MB / 8.62MB",
+          "CPUPerc": "0.00%",
+          "Container": "118f607b4c94f4190424b49dc11e2dcab569d564f8de9632a2ca9fdfa3e30d6a",
+          "ID": "118f607b4c94",
+          "MemPerc": "0.80%",
+          "MemUsage": "62.15MiB / 7.621GiB",
+          "Name": "dispatchgrid-prometheus-1",
+          "NetIO": "17.6MB / 140kB",
+          "PIDs": "19"
+        },
+        {
+          "BlockIO": "45.9MB / 80.4MB",
+          "CPUPerc": "4.97%",
+          "Container": "1cca8f2946550bd5290a3ceddcb9f272cdba538e4e78c9927404a01397e5e3d3",
+          "ID": "1cca8f294655",
+          "MemPerc": "1.48%",
+          "MemUsage": "115.4MiB / 7.621GiB",
+          "Name": "dispatchgrid-postgres-1",
+          "NetIO": "6.05MB / 4.92MB",
+          "PIDs": "38"
+        },
+        {
+          "BlockIO": "31.4MB / 434kB",
+          "CPUPerc": "3.21%",
+          "Container": "847f915f59c7222605dfbdff94ab16dba731b1e9571b7bf6d8b46bf4d50db1fc",
+          "ID": "847f915f59c7",
+          "MemPerc": "0.17%",
+          "MemUsage": "12.89MiB / 7.621GiB",
+          "Name": "dispatchgrid-redis-1",
+          "NetIO": "215kB / 96.3kB",
+          "PIDs": "6"
+        },
+        {
+          "BlockIO": "138MB / 6.76MB",
+          "CPUPerc": "3.27%",
+          "Container": "b0d75295154baaba8f4c7dd7716891fb84d30573ffebb300d25f254b5582f4dc",
+          "ID": "b0d75295154b",
+          "MemPerc": "8.87%",
+          "MemUsage": "692.5MiB / 7.621GiB",
+          "Name": "dispatchgrid-kafka-1",
+          "NetIO": "2.31MB / 1.87MB",
+          "PIDs": "116"
+        }
+      ]
+    }
+  ]
+}

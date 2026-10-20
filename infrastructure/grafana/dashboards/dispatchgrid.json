@@ -1,0 +1,16 @@
+{
+ "uid":"dispatchgrid","title":"DispatchGrid · Delivery operations","schemaVersion":40,"version":1,
+ "refresh":"10s","time":{"from":"now-1h","to":"now"},"tags":["dispatchgrid"],
+ "panels":[
+  {"id":1,"type":"stat","title":"Ingestion / second","gridPos":{"x":0,"y":0,"w":6,"h":4},"targets":[{"expr":"sum(rate(dispatchgrid_events_ingested_total[5m]))","refId":"A"}]},
+  {"id":2,"type":"stat","title":"Successful attempts / second","gridPos":{"x":6,"y":0,"w":6,"h":4},"targets":[{"expr":"sum(rate(dispatchgrid_deliveries_total{outcome=\"DELIVERED\"}[5m]))","refId":"A"}]},
+  {"id":3,"type":"stat","title":"Unpublished outbox","gridPos":{"x":12,"y":0,"w":6,"h":4},"targets":[{"expr":"max(dispatchgrid_outbox_pending)","refId":"A"}]},
+  {"id":4,"type":"stat","title":"Pending deliveries","gridPos":{"x":18,"y":0,"w":6,"h":4},"targets":[{"expr":"max(dispatchgrid_delivery_pending)","refId":"A"}]},
+  {"id":5,"type":"timeseries","title":"Delivery latency · p50 / p95 / p99 (seconds)","gridPos":{"x":0,"y":4,"w":12,"h":8},"targets":[{"expr":"histogram_quantile(0.50, sum by(le)(rate(dispatchgrid_delivery_duration_seconds_bucket[5m])))","legendFormat":"p50","refId":"A"},{"expr":"histogram_quantile(0.95, sum by(le)(rate(dispatchgrid_delivery_duration_seconds_bucket[5m])))","legendFormat":"p95","refId":"B"},{"expr":"histogram_quantile(0.99, sum by(le)(rate(dispatchgrid_delivery_duration_seconds_bucket[5m])))","legendFormat":"p99","refId":"C"}]},
+  {"id":6,"type":"timeseries","title":"Attempt outcomes / second","gridPos":{"x":12,"y":4,"w":12,"h":8},"targets":[{"expr":"sum by(outcome)(rate(dispatchgrid_deliveries_total[5m]))","legendFormat":"{{outcome}}","refId":"A"}]},
+  {"id":7,"type":"timeseries","title":"HTTP API p95 (seconds)","gridPos":{"x":0,"y":12,"w":12,"h":8},"targets":[{"expr":"histogram_quantile(0.95,sum by(le,uri)(rate(http_server_requests_seconds_bucket{application=\"dispatchgrid-api\"}[5m])))","legendFormat":"{{uri}}","refId":"A"}]},
+  {"id":8,"type":"timeseries","title":"Kafka consumer lag","gridPos":{"x":12,"y":12,"w":12,"h":8},"targets":[{"expr":"max by(client_id)(kafka_consumer_fetch_manager_records_lag_max)","legendFormat":"{{client_id}}","refId":"A"}]},
+  {"id":9,"type":"timeseries","title":"Retries and dead letters / second","gridPos":{"x":0,"y":20,"w":12,"h":8},"targets":[{"expr":"sum(rate(dispatchgrid_retries_total[5m]))","legendFormat":"retries","refId":"A"},{"expr":"sum(rate(dispatchgrid_deadletters_total[5m]))","legendFormat":"terminal failures","refId":"B"}]},
+  {"id":10,"type":"timeseries","title":"Process CPU","gridPos":{"x":12,"y":20,"w":12,"h":8},"targets":[{"expr":"process_cpu_usage","legendFormat":"{{application}} {{instance}}","refId":"A"}]}
+ ]
+}

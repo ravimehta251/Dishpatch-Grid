@@ -1,0 +1,73 @@
+spring:
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/dispatchgrid}
+    username: ${DB_USERNAME:dispatchgrid}
+    password: ${DB_PASSWORD}
+    hikari:
+      maximum-pool-size: ${DB_POOL_SIZE:16}
+      connection-timeout: 5000
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+  flyway:
+    enabled: true
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      timeout: 2s
+      connect-timeout: 2s
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      acks: all
+      properties:
+        enable.idempotence: true
+        delivery.timeout.ms: 10000
+        request.timeout.ms: 5000
+        max.block.ms: 5000
+    consumer:
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      auto-offset-reset: earliest
+      enable-auto-commit: false
+      max-poll-records: 1
+      properties:
+        max.poll.interval.ms: 120000
+    listener:
+      ack-mode: record
+  lifecycle:
+    timeout-per-shutdown-phase: 30s
+server:
+  shutdown: graceful
+  error:
+    include-message: never
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,prometheus,info
+  endpoint:
+    health:
+      show-details: never
+      probes:
+        enabled: true
+  metrics:
+    distribution:
+      percentiles-histogram:
+        http.server.requests: true
+        dispatchgrid.delivery.duration: true
+        dispatchgrid.worker.duration: true
+    tags:
+      application: ${spring.application.name}
+logging:
+  structured:
+    format:
+      console: ecs
+dispatchgrid:
+  encryption-key: ${ENCRYPTION_KEY}
+  monitoring-token: ${MONITORING_TOKEN}
+  allow-private-destinations: ${DISPATCHGRID_ALLOW_PRIVATE_DESTINATIONS:}

@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: dispatchgrid-worker
+  config:
+    import: classpath:application-common.yml
+server:
+  port: ${SERVER_PORT:8081}
+dispatchgrid:
+  outbox-poll-ms: ${OUTBOX_POLL_MS:20}
+  scheduling-enabled: ${SCHEDULING_ENABLED:true}
+  listeners-enabled: ${LISTENERS_ENABLED:true}
+  concurrency: ${WORKER_CONCURRENCY:8}
+  partitions: ${KAFKA_PARTITIONS:12}
+  replication-factor: ${KAFKA_REPLICATION_FACTOR:1}

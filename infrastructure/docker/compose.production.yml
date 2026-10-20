@@ -1,0 +1,14 @@
+# Apply only on an operator-configured host with HTTPS and protected .env.
+services:
+  api:
+    environment:
+      COOKIE_SECURE: 'true'
+      DISPATCHGRID_ALLOW_PRIVATE_DESTINATIONS: ''
+      SPRINGDOC_API_DOCS_ENABLED: 'false'
+      SPRINGDOC_SWAGGER_UI_ENABLED: 'false'
+      SERVER_FORWARD_HEADERS_STRATEGY: framework
+  worker:
+    environment:
+      DISPATCHGRID_ALLOW_PRIVATE_DESTINATIONS: ''
+  receiver:
+    profiles: [development]

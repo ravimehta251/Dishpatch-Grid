@@ -1,0 +1,10 @@
+apiVersion: 1
+providers:
+  - name: DispatchGrid
+    orgId: 1
+    folder: DispatchGrid
+    type: file
+    disableDeletion: false
+    updateIntervalSeconds: 30
+    options:
+      path: /var/lib/grafana/dashboards

@@ -1,0 +1,184 @@
+name: dispatchgrid
+
+x-app-env: &app-env
+  DB_URL: jdbc:postgresql://postgres:5432/dispatchgrid
+  DB_USERNAME: ${DB_USERNAME:-dispatchgrid}
+  DB_PASSWORD: ${DB_PASSWORD:?Run scripts/setup-env.ps1 or scripts/setup-env.sh first}
+  KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+  REDIS_HOST: redis
+  REDIS_PORT: 6379
+  JWT_SECRET: ${JWT_SECRET:?JWT_SECRET is required}
+  ENCRYPTION_KEY: ${ENCRYPTION_KEY:?ENCRYPTION_KEY is required}
+  MONITORING_TOKEN: ${MONITORING_TOKEN:?MONITORING_TOKEN is required}
+  COOKIE_SECURE: "false"
+  DISPATCHGRID_ALLOW_PRIVATE_DESTINATIONS: receiver
+
+x-app-depends: &app-depends
+  postgres: {condition: service_healthy}
+  kafka: {condition: service_healthy}
+  redis: {condition: service_healthy}
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: dispatchgrid
+      POSTGRES_USER: ${DB_USERNAME:-dispatchgrid}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:?Database password is required}
+    ports: ["127.0.0.1:5432:5432"]
+    volumes: ["postgres-data:/var/lib/postgresql/data"]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    restart: unless-stopped
+
+  kafka:
+    image: apache/kafka:3.9.1
+    environment:
+      KAFKA_NODE_ID: 1
+      KAFKA_PROCESS_ROLES: broker,controller
+      KAFKA_LISTENERS: PLAINTEXT://:9092,CONTROLLER://:9093,EXTERNAL://:29092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,EXTERNAL://localhost:29092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT,EXTERNAL:PLAINTEXT
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka:9093
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+      KAFKA_NUM_PARTITIONS: 6
+      KAFKA_LOG_DIRS: /var/lib/kafka/data
+      CLUSTER_ID: MkU3OEVBNTcwNTJENDM2Qk
+    ports: ["127.0.0.1:29092:29092"]
+    volumes: ["kafka-data:/var/lib/kafka/data"]
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/kafka/bin/kafka-broker-api-versions.sh --bootstrap-server localhost:9092 >/dev/null 2>&1"]
+      interval: 10s
+      timeout: 10s
+      retries: 30
+      start_period: 30s
+    restart: unless-stopped
+
+  redis:
+    image: redis:7-alpine
+    command: ["redis-server", "--appendonly", "yes"]
+    ports: ["127.0.0.1:6379:6379"]
+    volumes: ["redis-data:/data"]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    restart: unless-stopped
+
+  api:
+    build:
+      context: .
+      dockerfile: infrastructure/docker/backend.Dockerfile
+      args: {MODULE: dispatchgrid-api}
+    environment: *app-env
+    ports: ["127.0.0.1:${API_PORT:-8080}:8080"]
+    depends_on: *app-depends
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:8080/actuator/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+      start_period: 40s
+    mem_limit: 768m
+    restart: unless-stopped
+
+  worker:
+    build:
+      context: .
+      dockerfile: infrastructure/docker/backend.Dockerfile
+      args: {MODULE: dispatchgrid-worker}
+    environment:
+      <<: *app-env
+      WORKER_CONCURRENCY: ${WORKER_CONCURRENCY:-8}
+      OUTBOX_POLL_MS: ${OUTBOX_POLL_MS:-20}
+    depends_on:
+      <<: *app-depends
+      api: {condition: service_healthy}
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:8081/actuator/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+      start_period: 40s
+    mem_limit: 768m
+    restart: unless-stopped
+
+  receiver:
+    build: ./examples/sample-webhook-receiver
+    environment:
+      RECEIVER_CONTROL_TOKEN: ${RECEIVER_CONTROL_TOKEN:?Receiver token is required}
+      ENABLE_DEV_CONTROL: "true"
+      RECEIVER_DB: /data/receiver.sqlite3
+    ports: ["127.0.0.1:${RECEIVER_PORT:-8090}:8090"]
+    volumes: ["receiver-data:/data"]
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8090/health', timeout=2)"]
+      interval: 10s
+      timeout: 3s
+      retries: 10
+    restart: unless-stopped
+
+  prometheus:
+    image: prom/prometheus:v3.2.1
+    entrypoint: ["/bin/sh", "-c"]
+    command: ['printf "%s" "$$MONITORING_TOKEN" > /tmp/monitoring-token; exec /bin/prometheus --config.file=/etc/prometheus/prometheus.yml --storage.tsdb.path=/prometheus --storage.tsdb.retention.time=7d']
+    environment:
+      MONITORING_TOKEN: ${MONITORING_TOKEN:?Monitoring token is required}
+    volumes:
+      - ./infrastructure/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus-data:/prometheus
+    ports: ["127.0.0.1:${PROMETHEUS_PORT:-9090}:9090"]
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://localhost:9090/-/healthy"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+    restart: unless-stopped
+
+  grafana:
+    image: grafana/grafana:11.6.0
+    environment:
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_ADMIN_PASSWORD:?Grafana password is required}
+      GF_USERS_ALLOW_SIGN_UP: "false"
+      GF_AUTH_ANONYMOUS_ENABLED: "false"
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - ./infrastructure/grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./infrastructure/grafana/dashboards:/var/lib/grafana/dashboards:ro
+    ports: ["127.0.0.1:${GRAFANA_PORT:-3001}:3000"]
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://localhost:3000/api/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+    depends_on: [prometheus]
+    restart: unless-stopped
+
+  dashboard:
+    build:
+      context: .
+      dockerfile: infrastructure/docker/dashboard.Dockerfile
+    ports: ["127.0.0.1:${DASHBOARD_PORT:-3000}:80"]
+    depends_on:
+      api: {condition: service_healthy}
+    restart: unless-stopped
+
+volumes:
+  postgres-data:
+  kafka-data:
+  redis-data:
+  receiver-data:
+  prometheus-data:
+  grafana-data:

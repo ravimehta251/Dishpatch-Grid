@@ -1,0 +1,28 @@
+name: optional-ec2-deployment
+on:
+  workflow_dispatch:
+    inputs:
+      revision:
+        description: 'Reviewed commit SHA to deploy on the configured EC2 host'
+        required: true
+permissions: {contents: read}
+jobs:
+  deploy:
+    environment: production
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy reviewed revision
+        env:
+          DEPLOY_HOST: '${{ secrets.DEPLOY_HOST }}'
+          DEPLOY_USER: '${{ secrets.DEPLOY_USER }}'
+          DEPLOY_SSH_KEY: '${{ secrets.DEPLOY_SSH_KEY }}'
+          DEPLOY_KNOWN_HOSTS: '${{ secrets.DEPLOY_KNOWN_HOSTS }}'
+          REVISION: '${{ inputs.revision }}'
+        run: |
+          set -euo pipefail
+          [[ "$REVISION" =~ ^[0-9a-f]{40}$ ]] || exit 1
+          mkdir -p ~/.ssh
+          printf '%s\n' "$DEPLOY_SSH_KEY" > ~/.ssh/id_ed25519
+          printf '%s\n' "$DEPLOY_KNOWN_HOSTS" > ~/.ssh/known_hosts
+          chmod 600 ~/.ssh/id_ed25519 ~/.ssh/known_hosts
+          ssh "$DEPLOY_USER@$DEPLOY_HOST" "cd /opt/dispatchgrid && git fetch origin && git checkout --detach '$REVISION' && docker compose -f docker-compose.yml -f infrastructure/docker/compose.production.yml up -d --build && docker compose exec -T api curl --retry 30 --retry-delay 2 --retry-connrefused -fsS http://localhost:8080/actuator/health"

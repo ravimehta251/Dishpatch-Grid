@@ -254,18 +254,28 @@ main {
   background: var(--panel);
 }
 .breadcrumb {
+  min-width: 0;
   font-size: 11px;
   color: var(--muted);
   display: flex;
   align-items: center;
   gap: 14px;
 }
+.breadcrumb-prefix {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+}
 .breadcrumb strong {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   font-weight: 500;
   color: var(--text);
 }
 .top-actions {
   display: flex;
+  flex-shrink: 0;
   align-items: center;
   gap: 10px;
   font-size: 10px;
@@ -1222,6 +1232,26 @@ footer span:last-child {
   .topbar {
     height: 60px;
     padding: 0 17px;
+    gap: 12px;
+  }
+  .breadcrumb {
+    gap: 8px;
+  }
+  .breadcrumb-prefix {
+    display: none;
+  }
+  .top-actions {
+    gap: 6px;
+  }
+  .top-actions .icon-button {
+    margin: 0;
+  }
+  .top-actions .avatar {
+    display: none;
+  }
+  .logout-button {
+    padding: 8px 10px;
+    font-size: 10px;
   }
   main {
     margin-left: 0;

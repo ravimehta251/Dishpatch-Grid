@@ -61,7 +61,8 @@ export default function App() {
   const [session, setSession] = useState<Row | null>(null),
     [loading, setLoading] = useState(true),
     [dark, setDark] = useState(localStorage.getItem("dg-theme") === "dark"),
-    [menu, setMenu] = useState(false);
+    [menu, setMenu] = useState(false),
+    [loggingOut, setLoggingOut] = useState(false);
   const query = useQueryClient();
   const location = useLocation();
   useEffect(() => {
@@ -75,6 +76,21 @@ export default function App() {
     localStorage.setItem("dg-theme", dark ? "dark" : "light");
   }, [dark]);
   useEffect(() => setMenu(false), [location.pathname]);
+  async function logout() {
+    if (loggingOut) return;
+    setLoggingOut(true);
+    try {
+      await api("/auth/logout", { method: "POST" });
+    } catch {
+      // Clear the local session even if the server cannot be reached.
+    } finally {
+      setToken("");
+      query.clear();
+      setSession(null);
+      setMenu(false);
+      setLoggingOut(false);
+    }
+  }
   if (loading)
     return (
       <div className="boot">
@@ -140,15 +156,9 @@ export default function App() {
               <button
                 className="icon-button"
                 title="Sign out"
-                onClick={async () => {
-                  try {
-                    await api("/auth/logout", { method: "POST" });
-                  } finally {
-                    setToken("");
-                    query.clear();
-                    setSession(null);
-                  }
-                }}
+                aria-label="Sign out"
+                disabled={loggingOut}
+                onClick={logout}
               >
                 <LogOut size={16} />
               </button>
@@ -164,7 +174,10 @@ export default function App() {
               >
                 <Menu size={20} />
               </button>
-              Workspace <span>/</span> <strong>{title}</strong>
+              <span className="breadcrumb-prefix">
+                Workspace <span>/</span>
+              </span>
+              <strong>{title}</strong>
             </div>
             <div className="top-actions">
               <span className="live-dot" /> <span>Live workspace</span>
@@ -178,6 +191,15 @@ export default function App() {
               <span className="avatar small">
                 {session.user.email[0].toUpperCase()}
               </span>
+              <button
+                className="secondary logout-button"
+                type="button"
+                disabled={loggingOut}
+                onClick={logout}
+              >
+                <LogOut size={16} />
+                {loggingOut ? "Logging out…" : "Logout"}
+              </button>
             </div>
           </header>
           <div className="content">
